@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitLab CI Timeline Visualizer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>GitLab CI Timeline Visualizer</h1>
+    <p>Paste a GitLab pipeline URL to render parent, child, and downstream pipeline jobs as a timeline.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <label for="pipelineUrl">Pipeline URL</label>
+      <input id="pipelineUrl" placeholder="https://gitlab.example.com/group/project/-/pipelines/123456" />
+
+      <div class="grid">
+        <div>
+          <label for="gitlabBaseUrl">GitLab base URL</label>
+          <input id="gitlabBaseUrl" placeholder="Auto-detected from pipeline URL" />
+        </div>
+        <div>
+          <label for="token">Access token</label>
+          <input id="token" type="password" placeholder="PAT with read_api scope" />
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="checkbox">
+          <input id="rememberToken" type="checkbox" />
+          Remember token locally
+        </label>
+        <button id="loadBtn">Load pipeline</button>
+      </div>
+
+      <div id="status" class="status"></div>
+    </section>
+
+    <section class="panel hidden" id="summaryPanel">
+      <h2>Summary</h2>
+      <div id="summary" class="summary"></div>
+    </section>
+
+    <section class="panel hidden" id="timelinePanel">
+      <div class="toolbar">
+        <h2>Timeline</h2>
+        <div class="toolbar-actions">
+          <button id="zoomOutBtn" type="button">Zoom out</button>
+          <button id="zoomInBtn" type="button">Zoom in</button>
+          <button id="exportBtn" type="button">Export JSON</button>
+        </div>
+      </div>
+      <div id="timeline" class="timeline"></div>
+    </section>
+  </main>
+
+  <template id="jobTemplate">
+    <div class="job-row">
+      <div class="job-meta">
+        <div class="job-title"></div>
+        <div class="job-subtitle"></div>
+      </div>
+      <div class="bar-area">
+        <a class="bar" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
